@@ -1,7 +1,11 @@
 # Project1
-Data cleaning
+## Cleaning Steps
+1. Removed duplicates
+2. Fixed formatting
+
+```python
 import pandas as pd
-import numpy as np
+df = pd.read_csv("raw_employee_data.csv")
 
 df = pd.read_csv("raw_employee_data.csv")
 
