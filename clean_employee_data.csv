@@ -1,0 +1,61 @@
+id,name,age,city,join_date,salary,email
+60,James Miller,25.0,New York,2023-05-06,58000.0,james@mail.com
+2,Sarah Lee,29.0,New York,2023-05-06,58000.0,sarah@mail.com
+3,Jane Doe,29.0,Unknown,2023-01-15,50000.0,jane@mail.com
+4,Sarah Lee,31.0,New York,,62000.0,sarah@mail.com
+5,James Miller,33.0,Unknown,2023-02-15,58000.0,james@mail.com
+6,David Kim,22.0,Los Angeles,2023-05-06,58000.0,unknown@mail.com
+7,David Kim,29.0,Chicago,2023-03-10,50000.0,david@mail.com
+8,Chris Wilson,25.0,Houston,2023-03-10,75000.0,unknown@mail.com
+9,Robert Clark,22.0,Miami,,50000.0,unknown@mail.com
+10,Jane Doe,33.0,Chicago,2023-05-06,75000.0,unknown@mail.com
+11,Lisa Chen,31.0,New York,2023-01-15,58000.0,lisa@mail.com
+12,Robert Clark,29.0,New York,2023-02-15,48000.0,robert@mail.com
+13,Chris Wilson,29.0,Miami,2023-05-06,48000.0,unknown@mail.com
+14,Michael Brown,45.0,Houston,2023-02-15,58000.0,unknown@mail.com
+15,Nina Patel,25.0,Los Angeles,,58000.0,nina@mail.com
+16,Michael Brown,27.0,Unknown,2023-03-10,58000.0,michael@mail.com
+17,Tom Baker,31.0,Houston,2023-01-15,62000.0,tom@mail.com
+18,Robert Clark,45.0,Unknown,2023-03-10,50000.0,robert@mail.com
+19,Sam Turner,29.0,Houston,2023-02-15,58000.0,unknown@mail.com
+20,Chris Wilson,27.0,Los Angeles,2023-03-10,62000.0,chris@mail.com
+21,Nina Patel,33.0,Chicago,2023-05-06,75000.0,unknown@mail.com
+22,Sam Turner,29.0,Unknown,2023-03-10,62000.0,sam@mail.com
+23,Tom Baker,27.0,New York,2023-01-15,48000.0,tom@mail.com
+24,Michael Brown,29.0,Unknown,,50000.0,unknown@mail.com
+25,Chris Wilson,29.0,Miami,,58000.0,chris@mail.com
+26,Olivia Moore,22.0,New York,2023-05-06,75000.0,unknown@mail.com
+27,Robert Clark,45.0,New York,2023-03-10,58000.0,robert@mail.com
+28,Anna Garcia,22.0,Chicago,,48000.0,anna@mail.com
+29,Tom Baker,25.0,Chicago,2023-05-06,75000.0,tom@mail.com
+60,Sarah Lee,29.0,Houston,2023-02-15,75000.0,sarah@mail.com
+60,Sam Turner,22.0,Houston,2023-04-05,50000.0,sam@mail.com
+32,Sam Turner,45.0,Chicago,2023-02-15,50000.0,sam@mail.com
+33,Sam Turner,29.0,New York,2023-01-15,58000.0,unknown@mail.com
+34,Olivia Moore,25.0,Los Angeles,2023-02-15,58000.0,unknown@mail.com
+35,Tom Baker,29.0,Chicago,,48000.0,tom@mail.com
+36,Chris Wilson,31.0,Chicago,2023-05-06,58000.0,unknown@mail.com
+60,James Miller,45.0,Miami,,58000.0,james@mail.com
+38,Sarah Lee,31.0,New York,2023-03-10,50000.0,sarah@mail.com
+39,Tom Baker,31.0,Chicago,2023-01-15,50000.0,tom@mail.com
+40,James Miller,22.0,Chicago,2023-01-15,50000.0,unknown@mail.com
+41,Jane Doe,33.0,Chicago,2023-03-10,58000.0,unknown@mail.com
+42,Sarah Lee,33.0,Los Angeles,2023-05-06,75000.0,sarah@mail.com
+43,Anna Garcia,31.0,Miami,2023-04-05,62000.0,anna@mail.com
+44,Jane Doe,29.0,Houston,2023-04-05,58000.0,unknown@mail.com
+45,Olivia Moore,22.0,New York,2023-01-15,58000.0,olivia@mail.com
+46,Emily Davis,25.0,Chicago,2023-02-15,62000.0,emily@mail.com
+47,Anna Garcia,29.0,Unknown,2023-02-15,58000.0,unknown@mail.com
+48,Sarah Lee,25.0,Miami,,50000.0,sarah@mail.com
+49,James Miller,33.0,New York,2023-01-15,48000.0,james@mail.com
+50,Michael Brown,29.0,Miami,2023-04-05,62000.0,unknown@mail.com
+51,Sam Turner,22.0,Los Angeles,2023-04-05,50000.0,unknown@mail.com
+52,David Kim,27.0,Chicago,2023-04-05,58000.0,david@mail.com
+53,Robert Clark,33.0,Miami,2023-02-15,62000.0,unknown@mail.com
+54,Sarah Lee,22.0,New York,2023-05-06,58000.0,sarah@mail.com
+55,John Smith,29.0,Miami,,48000.0,john@mail.com
+56,Michael Brown,22.0,New York,2023-02-15,50000.0,michael@mail.com
+57,Jane Doe,31.0,Unknown,2023-01-15,75000.0,jane@mail.com
+60,Lisa Chen,29.0,New York,,50000.0,unknown@mail.com
+59,James Miller,29.0,Houston,2023-03-10,62000.0,james@mail.com
+60,Nina Patel,45.0,Chicago,2023-03-10,58000.0,nina@mail.com
