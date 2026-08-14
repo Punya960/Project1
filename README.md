@@ -2,7 +2,6 @@
 ## Cleaning Steps
 1. Removed duplicates
 2. Fixed formatting
-
 ```python
 import pandas as pd
 df = pd.read_csv("raw_employee_data.csv")
