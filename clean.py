@@ -1,49 +1,99 @@
 """
 Project 1: Data Cleaning & Preparation
-Cleans raw_employee_data.csv by handling missing values, duplicates,
-and inconsistent formatting (dates, numbers, text).
+Extracts and cleans order data from Dataset_for_Data_Analytics.pdf.
+
+The dataset was provided as a PDF, not a CSV/Excel file. Text extraction
+revealed the source data itself has two built-in defects (not caused by
+extraction):
+  1. Every 'Date' value is missing its final digit
+     (e.g. "2023-01-0" instead of a full date like "2023-01-06").
+  2. "Credit Card" is consistently truncated to "Credit Car" and fused
+     directly onto the next field with no separating space.
+
+Because the categorical fields in this dataset are limited (5 products,
+5 order statuses, 5 payment methods, etc.), regex pattern-matching
+against known vocabularies is used to correctly split each row instead
+of relying on column position, which would corrupt the data further.
 """
 
+import re
 import pandas as pd
 
-# Load raw data
-df = pd.read_csv("raw_employee_data.csv")
+# Step 1: extract raw text from the PDF (layout mode preserves spacing)
+# Run this once from the command line before running this script:
+#   pdftotext -layout Dataset_for_Data_Analytics.pdf sample.txt
 
-# 1. Identify missing values
-print("Missing values per column:")
-print(df.isnull().sum())
+with open("sample.txt") as f:
+    text = f.read()
 
-# 2. Remove duplicate rows
-df_clean = df.drop_duplicates(
-    subset=["name", "age", "city", "join_date", "salary", "email"]
-).copy()
-
-# 3. Fix text formatting (standardize case, strip whitespace)
-df_clean["name"] = df_clean["name"].str.strip().str.title()
-df_clean["city"] = df_clean["city"].str.strip().str.title()
-df_clean["email"] = df_clean["email"].str.strip().str.lower()
-
-# 4. Fix numeric formatting (age, salary)
-df_clean["age"] = pd.to_numeric(df_clean["age"], errors="coerce")
-df_clean["salary"] = df_clean["salary"].astype(str).str.replace(",", "", regex=False)
-df_clean["salary"] = pd.to_numeric(df_clean["salary"], errors="coerce")
-
-# 5. Fix date formatting (multiple formats -> one standard)
-df_clean["join_date"] = pd.to_datetime(
-    df_clean["join_date"], errors="coerce", format="mixed"
+# Step 2: parse each order row using known field vocabularies
+row_pattern = re.compile(
+    r'(ORD\d+)\s*(\d{4}-\d{2}-\d)(C\d+)\s+'
+    r'(Monitor|Phone|Tablet|Chair|Printer|Desk|Laptop)\s+'
+    r'(\d+)\s+([\d.]+)\s+'
+    r'(\d+)\s+Main\s+'
+    r'(Debit Card|Credit Car d?|Credit Car|Online|Cash|Gift Card)\s*'
+    r'(Shipped|Cancelled|Returned|Delivered|Pending)\s+'
+    r'(TRK\d+)\s+'
+    r'(\d+)\s*'
+    r'(SAVE10|FREESHIP|WINTER15)?\s*'
+    r'(Instagram|Referral|Email|Facebook|Google)\s+'
+    r'([\d.]+)'
 )
 
-# 6. Handle remaining missing values
-df_clean["age"] = df_clean["age"].fillna(df_clean["age"].median())
-df_clean["salary"] = df_clean["salary"].fillna(df_clean["salary"].median())
-df_clean["city"] = df_clean["city"].fillna("Unknown")
-df_clean["email"] = df_clean["email"].fillna("unknown@mail.com")
-# join_date left as NaT where missing -- no reliable way to infer it
+cols = ["OrderID", "Date", "CustomerID", "Product", "Quantity", "UnitPrice",
+        "ShippingAddress", "PaymentMethod", "OrderStatus", "TrackingNumber",
+        "ItemsInCart", "CouponCode", "ReferralSource", "TotalPrice"]
 
-# Save cleaned data
-df_clean.to_csv("clean_employee_data.csv", index=False)
+rows = []
+for line in text.split("\n"):
+    line = line.strip()
+    if not line.startswith("ORD"):
+        continue
+    m = row_pattern.match(line)
+    if m:
+        rows.append(list(m.groups()))
 
-print("\nCleaning complete.")
-print(f"Rows before: {len(df)} | Rows after: {len(df_clean)}")
+df = pd.DataFrame(rows, columns=cols)
+df.to_csv("raw_orders_data.csv", index=False)
+
+print("Raw rows parsed:", len(df))
+
+# Step 3: clean the parsed data
+df_clean = df.copy()
+
+# Fix truncated "Credit Car" -> "Credit Card"
+df_clean["PaymentMethod"] = df_clean["PaymentMethod"].str.strip().replace({
+    "Credit Car": "Credit Card",
+    "Credit Car d": "Credit Card"
+})
+
+# Rebuild shipping address
+df_clean["ShippingAddress"] = df_clean["ShippingAddress"] + " Main St"
+
+# Convert numeric columns
+for col in ["Quantity", "UnitPrice", "ItemsInCart", "TotalPrice"]:
+    df_clean[col] = pd.to_numeric(df_clean[col], errors="coerce")
+
+# Dates are missing their final digit in the SOURCE file -> unrecoverable.
+# Keep the truncated raw value for reference, but treat Date as missing
+# rather than guessing the final digit.
+df_clean["Date_Incomplete"] = df_clean["Date"]
+df_clean["Date"] = pd.NaT
+
+# Missing coupon codes -> explicit label instead of blank
+df_clean["CouponCode"] = df_clean["CouponCode"].replace("", "NoCoupon").fillna("NoCoupon")
+
+# Step 4: verification checks
+print("Duplicate rows:", df_clean.duplicated().sum())
+
+expected_total = (df_clean["Quantity"] * df_clean["UnitPrice"]).round(2)
+mismatches = (expected_total - df_clean["TotalPrice"]).abs() > 0.05
+print("Rows where TotalPrice doesn't match Quantity x UnitPrice:", mismatches.sum())
+
+# Step 5: save cleaned data
+df_clean.to_csv("clean_orders_data.csv", index=False)
+
+print(f"\nCleaning complete. Rows: {len(df_clean)}")
 print("Remaining missing values:")
 print(df_clean.isnull().sum())
